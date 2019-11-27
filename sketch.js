@@ -32,18 +32,20 @@ function draw() {
   tg1Logo();
 
   // highMid visualizer
-  energyVisualizer(width / 10, "treble");
+  energyVisualizer(width / 7, "treble");
 
   // highMid visualizer
-  energyVisualizer(width / 8, "highMid");
+  energyVisualizer(width / 5, "highMid");
 
   // highMid visualizer
-  energyVisualizer(width / 6, "lowMid");
+  energyVisualizer(width / 4, "lowMid");
 
   // bass visualizer
-  energyVisualizer(width / 4, "bass");
+  energyVisualizer(width / 3, "bass");
 
-  //showReplayButton();
+  // highMid visualizer
+  energyVisualizer(width / 2, "treble");
+
 }
 
 function windowResized() {
@@ -59,7 +61,7 @@ function tg1Logo() {
 
   //console.log("var volume:" + volume);
 
-  image(logo, windowWidth / 3, windowHeight / 2, logoWidth, logoHeight);
+  image(logo, windowWidth / 2, windowHeight / 2, logoWidth, logoHeight);
 }
 
 function showReplayButton() {
@@ -70,7 +72,7 @@ function showReplayButton() {
 
 function replayButton() {
   let playButton = createButton('Replay TG1 theme');
-  playButton.position((windowWidth / 3) - 90, windowHeight - 60);
+  playButton.position((windowWidth / 2) - 90, windowHeight - 60);
   playButton.addClass("button");
   playButton.mousePressed(playTheme);
 }
@@ -93,13 +95,13 @@ function energyVisualizer(_radius, _energy) {
   //console.log(energyBass);
 
   push();
-  translate(width / 3, height / 2);
+  translate(width / 2, height / 2);
   rotate(energy);
   strokeCap(SQUARE);
   strokeWeight(2);
   noFill();
   stroke(255, 233, 92);
 
-  arc(0, 0, radius + energy, radius + energy, 0, 350);
+  arc(0, 0, radius + energy, radius + energy, 0, 340);
   pop();
 }
