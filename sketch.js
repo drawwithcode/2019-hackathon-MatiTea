@@ -15,9 +15,13 @@ function setup() {
 
   rectMode(CENTER);
   imageMode(CENTER);
+  angleMode(DEGREES);
 
   analyzer = new p5.Amplitude();
   analyzer.setInput(themeSong);
+
+  fft = new p5.FFT(0.7, 512);
+  fft.setInput(themeSong);
 
   showReplayButton();
 }
@@ -27,6 +31,18 @@ function draw() {
   
   tg1Logo();
 
+  // highMid visualizer
+  energyVisualizer(width / 10, "treble");
+
+  // highMid visualizer
+  energyVisualizer(width / 8, "highMid");
+
+  // highMid visualizer
+  energyVisualizer(width / 6, "lowMid");
+
+  // bass visualizer
+  energyVisualizer(width / 4, "bass");
+
   //showReplayButton();
 }
 
@@ -34,22 +50,16 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-function playTheme() {
-  if (themeSong.isPlaying() == false) {
-    themeSong.play();
-    newCanvas.mouseMoved(false);
-  } 
-}
-
 function tg1Logo() {
   volume = analyzer.getLevel();
-  volume = map(volume, 0, 1, 0, width / 2);
+  volume = map(volume, 0, 1, 0, width / 4);
+
+  let logoWidth = logo.width / 12 + (volume * 2);
+  let logoHeight = logo.height / 12  + (volume * 2);
 
   //console.log("var volume:" + volume);
 
-  fill(255, 233, 92);
-  noStroke();
-  image(logo, windowWidth / 4, windowHeight / 2, logo.width / 10 + volume, logo.height / 10 + volume);
+  image(logo, windowWidth / 3, windowHeight / 2, logoWidth, logoHeight);
 }
 
 function showReplayButton() {
@@ -60,7 +70,57 @@ function showReplayButton() {
 
 function replayButton() {
   let playButton = createButton('Replay TG1 theme');
-  playButton.position(windowWidth / 4, (windowHeight / 4) * 3);
+  playButton.position((windowWidth / 3) - 90, windowHeight - 60);
   playButton.addClass("button");
   playButton.mousePressed(playTheme);
+}
+
+function playTheme() {
+  if (themeSong.isPlaying() == false) {
+    themeSong.play();
+    newCanvas.mouseMoved(false);
+  } 
+}
+
+function bassVisualizer() {
+  let spectrum = fft.analyze();
+  const energyBass = fft.getEnergy("bass");
+  map(energyBass, 0, 255, 0, 360);
+
+  let radius = width / 10;
+
+  //console.log(energyBass);
+
+  push();
+  translate(width / 2, height / 2);
+  rotate(energyBass);
+  strokeCap(SQUARE);
+  strokeWeight(2);
+  noFill();
+  stroke(255, 233, 92);
+
+  arc(0, 0, radius + energyBass, radius + energyBass, 0, 350);
+  pop();
+}
+
+function energyVisualizer(_radius, _energy) {
+  this.radius = _radius;
+  this.energy = _energy;
+  
+  let spectrum = fft.analyze();
+  const energy = fft.getEnergy(this.energy);
+  map(energy, 0, 255, 0, 360);
+
+  //console.log(energyBass);
+
+  push();
+  translate(width / 3, height / 2);
+  rotate(energy);
+  strokeCap(SQUARE);
+  strokeWeight(2);
+  noFill();
+  stroke(255, 233, 92);
+
+  arc(0, 0, radius + energy, radius + energy, 0, 350);
+  pop();
 }
