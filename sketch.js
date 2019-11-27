@@ -31,7 +31,7 @@ function draw() {
   
   tg1Logo();
 
-  // highMid visualizer
+  // inner highMid visualizer
   energyVisualizer(width / 7, "treble");
 
   // highMid visualizer
@@ -43,7 +43,7 @@ function draw() {
   // bass visualizer
   energyVisualizer(width / 3, "bass");
 
-  // highMid visualizer
+  // outer highMid visualizer
   energyVisualizer(width / 2, "treble");
 
 }
@@ -102,6 +102,6 @@ function energyVisualizer(_radius, _energy) {
   noFill();
   stroke(255, 233, 92);
 
-  arc(0, 0, radius + energy, radius + energy, 0, 340);
+  arc(0, 0, radius + energy, radius + energy, 10, 350);
   pop();
 }
