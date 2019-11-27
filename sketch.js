@@ -82,27 +82,6 @@ function playTheme() {
   } 
 }
 
-function bassVisualizer() {
-  let spectrum = fft.analyze();
-  const energyBass = fft.getEnergy("bass");
-  map(energyBass, 0, 255, 0, 360);
-
-  let radius = width / 10;
-
-  //console.log(energyBass);
-
-  push();
-  translate(width / 2, height / 2);
-  rotate(energyBass);
-  strokeCap(SQUARE);
-  strokeWeight(2);
-  noFill();
-  stroke(255, 233, 92);
-
-  arc(0, 0, radius + energyBass, radius + energyBass, 0, 350);
-  pop();
-}
-
 function energyVisualizer(_radius, _energy) {
   this.radius = _radius;
   this.energy = _energy;
