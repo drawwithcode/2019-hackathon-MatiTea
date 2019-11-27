@@ -23,7 +23,7 @@ function setup() {
   fft = new p5.FFT(0.7, 512);
   fft.setInput(themeSong);
 
-  showReplayButton();
+  replayButton();
 }
 
 function draw() {
@@ -62,12 +62,6 @@ function tg1Logo() {
   //console.log("var volume:" + volume);
 
   image(logo, windowWidth / 2, windowHeight / 2, logoWidth, logoHeight);
-}
-
-function showReplayButton() {
-  if (themeSong.isPlaying() == false) {
-    replayButton();
-  }
 }
 
 function replayButton() {
